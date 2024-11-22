@@ -55,14 +55,14 @@ def get_results():
         client = OpenAI()
         # Call OpenAI API with timeout
         text = text.replace("\n", " ")
-        openai_response = client.embeddings.create(input=[text], model="text-embedding-3-large", dimensions=1024).data[0].embedding
+        openai_response = client.embeddings.create(input=[text], model="text-embedding-ada-002", dimensions=1536).data[0].embedding
     except Exception as e:
         return jsonify({'error': f'Error calling OpenAI API: {str(e)}'}), 500
     
     try:
         # Call Picone API with timeout
         pc = Pinecone(api_key=PICONE_API_KEY)
-        index = pc.Index("icd-index")
+        index = pc.Index("esp32c3rag")
         picone_response = index.query(
             vector=openai_response,
             top_k=10
