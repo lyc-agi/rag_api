@@ -55,7 +55,8 @@ def get_results():
         client = OpenAI()
         # Call OpenAI API with timeout
         text = text.replace("\n", " ")
-        openai_response = client.embeddings.create(input=[text], model="text-embedding-ada-002", dimensions=1536).data[0].embedding
+        print(text)
+        openai_response = client.embeddings.create(input=[text], model="text-embedding-ada-002",).data[0].embedding
     except Exception as e:
         return jsonify({'error': f'Error calling OpenAI API: {str(e)}'}), 500
     
